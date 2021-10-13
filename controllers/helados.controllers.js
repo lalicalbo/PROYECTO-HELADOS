@@ -87,3 +87,20 @@ export const deleteOne=(req,res)=>{
         });
     });   
 };
+
+
+export const findOne =(req,res,next)=>{
+    //connect to db
+    db.connect();
+    const { id } = req.body;
+   
+ 
+
+   Helados.findById(id ,(err,icecream)=>{
+      
+      if (err) res.status(404).send({error: true , messageError: " No existe helado a vender"});
+      req.body.icecream = icecream;
+      next();
+    
+   });
+};

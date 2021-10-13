@@ -21,9 +21,27 @@ const app = express()
 // este codigo es para poder ver el post que se realiza en create 
 app.use(express.json());
 
+
+const middleware = (req, res, next)=>{
+    console.log("Hola soy un middleware...");
+    req.body.data =" hola hola";
+    next();
+}
+
+//Middleware
+
+//app.use(middleware),
+
 app.get("/", (req, res) => {
+    console.log("data", req.body);
     res.send("Mi api");
 });
+
+
+
+
+
+
 
 
 //link sell router

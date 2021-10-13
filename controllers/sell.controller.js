@@ -3,7 +3,6 @@ import { Helados, Sells, SoldIcecreams } from "../models/index3.js";
 import db from "../dataBase.js";
 
 
-
 export const sell = (req, res) => {
     console.log("BODY ", req.body);
     const { id, cantidad_comprar: quantity } = req.body;
@@ -59,3 +58,33 @@ export const sell = (req, res) => {
     });
 };
 
+//register sell
+
+
+export const sellMw =( req, res)=>{
+    console.log("BODY", req.body);
+    res.send("sell MW");
+};
+
+//Middleware
+
+export const createSell = (req, res, next )=>{
+    const { cantidad_comprar: quantity} = req.body;
+    const {precio:price} = req.body.icecream
+    const total = quantity * price;
+
+    const sell ={
+        fecha:Date.now(),
+        valor:total,
+    }
+
+
+
+    Sells.create(sell,(err, sellData)=>{
+        if(err) res.status(500).send(err);
+        req.body.sell = sellData;
+        next();
+
+    });
+
+};
