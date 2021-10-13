@@ -7,16 +7,27 @@
 
 
 import express from "express";
-import { icecreamControllers } from "./controllers/index2.js";
+import { icecreamControllers, rolCtrl, sellCtrl } from "./controllers/index2.js";
 
-import { heladosRoutes } from "./routes/index.js";
-console.log("routes",heladosRoutes);
+import { heladosRoutes, rolRoutes, sellRouter } from "./routes/index.js";
+
+
+console.log("routes", heladosRoutes);
+
 
 //create app
-const app= express()
+const app = express()
 
 // este codigo es para poder ver el post que se realiza en create 
 app.use(express.json());
+
+app.get("/", (req, res) => {
+    res.send("Mi api");
+});
+
+
+//link sell router
+app.use("/api", sellRouter);
 
 //routes icecream
 
@@ -26,13 +37,27 @@ app.post(heladosRoutes.CREATE, icecreamControllers.create);
 app.put(heladosRoutes.UPDATE, icecreamControllers.update);
 app.delete(heladosRoutes.DELETE, icecreamControllers.deleteOne);
 
-// routes of sales
+//routes or rol
 
+
+app.get(rolRoutes.GET, rolCtrl.getAll);
+app.get(rolRoutes.GET_ONE, rolCtrl.getOne);
+app.post(rolRoutes.CREATE, rolCtrl.create);
+app.put(rolRoutes.UPDATE, rolCtrl.update);
+app.delete(rolRoutes.DELETE, rolCtrl.deleteOne);
+
+// routes of sell con app.route
+
+/*
+app.route(sellRoutes.SELL).post(sellCtrl.sell);
+app.route(sellRoutes.MAIN).get((req,res)=>{
+    res.send("main ventas...");
+})*/
 
 
 
 //lauch server
-app.listen(3004,()=>{
+app.listen(3004, () => {
     console.log("initialized server...")
 });
 

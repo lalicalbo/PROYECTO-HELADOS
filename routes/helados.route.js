@@ -4,8 +4,6 @@ const heladosRoutes={
     CREATE:`/icecream/create`,
     UPDATE:`/icecream/update/:id`,
     DELETE:`/icecream/delete/:id`,
-
-
 }
 
 // esta rutas se van a conectar con unas funciones//
